@@ -5,7 +5,10 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faTrash, faEdit, faSave } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
-  const [todos, setTodos] = useState([]);
+
+  const storedTodos = JSON.parse(localStorage.getItem('todos'));
+
+  const [todos, setTodos] = useState(storedTodos);
   const [todoText, setTodoText] = useState('');
   const [editModeIndex, setEditModeIndex] = useState(-1);
   const [editText, setEditText] = useState(''); // New state for temporary edit text
@@ -50,13 +53,6 @@ function App() {
     return todos.length;
   };
 
-  // Load todos from local storage on component mount
-  useEffect(() => {
-    const storedTodos = localStorage.getItem('todos');
-    if (storedTodos) {
-      setTodos(JSON.parse(storedTodos));
-    }
-  }, []);
 
   // Save todos to local storage whenever the todos state changes
   useEffect(() => {
